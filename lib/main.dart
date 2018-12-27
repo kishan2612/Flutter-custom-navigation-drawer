@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter backdrop',
+      title: 'Flutter Custom Navigation Drawer',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Backdrop"),
+        title: Text("Slide Drawer"),
         elevation: 0,
         leading: IconButton(
           onPressed: () {
