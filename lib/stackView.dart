@@ -11,7 +11,6 @@ class MainActivity extends StatefulWidget {
 }
 
 class _MainActivityState extends State<MainActivity> {
-  static const _headerHeight = 60.0;
 
   static var _superHero = "CaptainAmerica";
 
