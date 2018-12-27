@@ -110,9 +110,8 @@ class _MainActivityState extends State<MainActivity> {
       ),
     );
   }
-
-
-  Animation<Offset> _getSlideAnimation(BoxConstraints _constraints){
+  
+Animation<Offset> _getSlideAnimation(BoxConstraints _constraints){
 
     return Tween(
       begin: Offset(0.85,0.0),
@@ -121,7 +120,6 @@ class _MainActivityState extends State<MainActivity> {
     
     
   }
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
