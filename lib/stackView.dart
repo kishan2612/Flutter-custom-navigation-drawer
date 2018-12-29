@@ -49,6 +49,7 @@ class _MainActivityState extends State<MainActivity> {
           SlideTransition(
             position: _getSlideAnimation(constraint),
             child: ScaleTransition(
+              alignment: Alignment.centerLeft,
               scale: _getScaleAnimation(constraint),child: _frontView(),))
           // SlideTransition(
           //     position: _getSlideAnimation(constraint), child: _frontView()),
