@@ -46,56 +46,55 @@ class _MainActivityState extends State<MainActivity> {
       child: Stack(
         children: <Widget>[
           _backView(_theme),
-          SlideTransition(
-              position: _getSlideAnimation(constraint), child: _frontView())
+          ScaleTransition(scale: _getScaleAnimation(constraint),child: _frontView(),)
+          // SlideTransition(
+          //     position: _getSlideAnimation(constraint), child: _frontView()),
         ],
       ),
     );
   }
 
-Widget _backView(ThemeData theme){
-return Scaffold(
-  appBar: AppBar(
-    backgroundColor: theme.backgroundColor,
-    elevation: 0.0,
-  ),
-  backgroundColor: theme.backgroundColor,
-  body: Container(
-    child: Center(
-          child: Column(
-      children: <Widget>[
-         MaterialButton(
-                      onPressed: () => _backViewOnClick(0),
-                      child:
-                          Text("Captain America", style: TextStyle(fontSize: 30)),
-                    ),
-                    MaterialButton(
-                      onPressed: () => _backViewOnClick(1),
-                      child: Text(
-                        "Iron Man",
-                        style: TextStyle(fontSize: 30),
-                      ),
-                    ),
-                    MaterialButton(
-                      onPressed: () => _backViewOnClick(2),
-                      child: Text(
-                        "Thor",
-                        style: TextStyle(fontSize: 30),
-                      ),
-                    ),
-                    MaterialButton(
-                      onPressed: () => _backViewOnClick(3),
-                      child: Text(
-                        "Hulk",
-                        style: TextStyle(fontSize: 30),
-                      ),
-                    )
-      ],
+  Widget _backView(ThemeData theme) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: theme.backgroundColor,
+        elevation: 0.0,
       ),
-    ),
-  ),
-);
-}
+      backgroundColor: theme.backgroundColor,
+      body: Container(
+        child: Column(
+          crossAxisAlignment:CrossAxisAlignment.start,
+          children: <Widget>[
+            MaterialButton(
+              onPressed: () => _backViewOnClick(0),
+              child: Text("Captain America", style: TextStyle(fontSize: 30)),
+            ),
+            MaterialButton(
+              onPressed: () => _backViewOnClick(1),
+              child: Text(
+                "Iron Man",
+                style: TextStyle(fontSize: 30),
+              ),
+            ),
+            MaterialButton(
+              onPressed: () => _backViewOnClick(2),
+              child: Text(
+                "Thor",
+                style: TextStyle(fontSize: 30),
+              ),
+            ),
+            MaterialButton(
+              onPressed: () => _backViewOnClick(3),
+              child: Text(
+                "Hulk",
+                style: TextStyle(fontSize: 30),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _frontView() {
     return Scaffold(
@@ -104,8 +103,10 @@ return Scaffold(
         backgroundColor: Colors.purple,
         leading: IconButton(
           onPressed: () {
-            widget._controller
-                .fling(velocity: AnimUtil.isBackpanelVisible(widget._controller) ? -1.0 : 1.0);
+            widget._controller.fling(
+                velocity: AnimUtil.isBackpanelVisible(widget._controller)
+                    ? -1.0
+                    : 1.0);
           },
           icon: AnimatedIcon(
             icon: AnimatedIcons.arrow_menu,
@@ -135,6 +136,13 @@ return Scaffold(
   Animation<Offset> _getSlideAnimation(BoxConstraints _constraints) {
     return Tween(begin: Offset(0.85, 0.0), end: Offset(0, 0)).animate(
         CurvedAnimation(parent: widget._controller, curve: Curves.linear));
+  }
+
+  Animation<double> _getScaleAnimation(BoxConstraints _constraints){
+    return Tween(
+      begin: 0.7,end: 1.0).animate(CurvedAnimation(
+        parent: widget._controller, curve: Curves.linear
+      ));
   }
 
   @override
