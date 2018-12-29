@@ -46,7 +46,10 @@ class _MainActivityState extends State<MainActivity> {
       child: Stack(
         children: <Widget>[
           _backView(_theme),
-          ScaleTransition(scale: _getScaleAnimation(constraint),child: _frontView(),)
+          SlideTransition(
+            position: _getSlideAnimation(constraint),
+            child: ScaleTransition(
+              scale: _getScaleAnimation(constraint),child: _frontView(),))
           // SlideTransition(
           //     position: _getSlideAnimation(constraint), child: _frontView()),
         ],
