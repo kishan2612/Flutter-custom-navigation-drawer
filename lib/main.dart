@@ -48,19 +48,6 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Slide Drawer"),
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            _controller.fling(velocity: _isBackpanelVisible()? -1.0:1.0);
-          }, 
-          icon: AnimatedIcon(
-            icon: AnimatedIcons.arrow_menu,
-            progress: _controller.view,
-          ),
-        ),
-      ),
       body: MainActivity(_controller),
     );
   }

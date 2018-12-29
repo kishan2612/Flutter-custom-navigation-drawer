@@ -11,15 +11,14 @@ class MainActivity extends StatefulWidget {
 }
 
 class _MainActivityState extends State<MainActivity> {
-
   static var _superHero = "CaptainAmerica";
-
 
   void animate(String hero) {
     setState(() {
       _superHero = hero;
     });
-    widget._controller.fling(velocity: AnimUtil.isBackpanelVisible(widget._controller) ? -1.0 : 1.0);
+    widget._controller.fling(
+        velocity: AnimUtil.isBackpanelVisible(widget._controller) ? -1.0 : 1.0);
   }
 
   void _backViewOnClick(int position) {
@@ -82,43 +81,52 @@ class _MainActivityState extends State<MainActivity> {
             ),
           ),
           SlideTransition(
-            position: _getSlideAnimation(constraint),
-            child: Material(
-              elevation: 16,
-              
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    
-                    Expanded(
-                      child: Container(
-                        child: Center(
-                          child: Text(
-                            _superHero,
-                            style: TextStyle(fontSize: 30, color: Colors.red),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          )
+              position: _getSlideAnimation(constraint), child: _frontView())
         ],
       ),
     );
   }
-  
-Animation<Offset> _getSlideAnimation(BoxConstraints _constraints){
 
-    return Tween(
-      begin: Offset(0.85,0.0),
-      end: Offset(0,0)
-    ) .animate(CurvedAnimation(parent: widget._controller,curve: Curves.linear));
-    
-    
+  Widget _frontView() {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Navigation"),
+        backgroundColor: Colors.purple,
+        leading: IconButton(
+          onPressed: () {
+            widget._controller
+                .fling(velocity: AnimUtil.isBackpanelVisible(widget._controller) ? -1.0 : 1.0);
+          },
+          icon: AnimatedIcon(
+            icon: AnimatedIcons.arrow_menu,
+            progress: widget._controller,
+          ),
+        ),
+      ),
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                child: Center(
+                  child: Text(
+                    _superHero,
+                    style: TextStyle(fontSize: 30, color: Colors.red),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
+
+  Animation<Offset> _getSlideAnimation(BoxConstraints _constraints) {
+    return Tween(begin: Offset(0.85, 0.0), end: Offset(0, 0)).animate(
+        CurvedAnimation(parent: widget._controller, curve: Curves.linear));
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
