@@ -45,47 +45,57 @@ class _MainActivityState extends State<MainActivity> {
     return Container(
       child: Stack(
         children: <Widget>[
-          Container(
-            color: _theme.primaryColor,
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  MaterialButton(
-                    onPressed: () => _backViewOnClick(0),
-                    child:
-                        Text("Captain America", style: TextStyle(fontSize: 30)),
-                  ),
-                  MaterialButton(
-                    onPressed: () => _backViewOnClick(1),
-                    child: Text(
-                      "Iron Man",
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: () => _backViewOnClick(2),
-                    child: Text(
-                      "Thor",
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: () => _backViewOnClick(3),
-                    child: Text(
-                      "Hulk",
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
+          _backView(_theme),
           SlideTransition(
               position: _getSlideAnimation(constraint), child: _frontView())
         ],
       ),
     );
   }
+
+Widget _backView(ThemeData theme){
+return Scaffold(
+  appBar: AppBar(
+    backgroundColor: theme.backgroundColor,
+    elevation: 0.0,
+  ),
+  backgroundColor: theme.backgroundColor,
+  body: Container(
+    child: Center(
+          child: Column(
+      children: <Widget>[
+         MaterialButton(
+                      onPressed: () => _backViewOnClick(0),
+                      child:
+                          Text("Captain America", style: TextStyle(fontSize: 30)),
+                    ),
+                    MaterialButton(
+                      onPressed: () => _backViewOnClick(1),
+                      child: Text(
+                        "Iron Man",
+                        style: TextStyle(fontSize: 30),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () => _backViewOnClick(2),
+                      child: Text(
+                        "Thor",
+                        style: TextStyle(fontSize: 30),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () => _backViewOnClick(3),
+                      child: Text(
+                        "Hulk",
+                        style: TextStyle(fontSize: 30),
+                      ),
+                    )
+      ],
+      ),
+    ),
+  ),
+);
+}
 
   Widget _frontView() {
     return Scaffold(
