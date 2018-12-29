@@ -11,14 +11,13 @@ class MainActivity extends StatefulWidget {
 }
 
 class _MainActivityState extends State<MainActivity> {
-  static var _superHero = "CaptainAmerica";
+  static String _superHeroName = "CaptainAmerica";
 
   void animate(String hero) {
     setState(() {
-      _superHero = hero;
+      _superHeroName = hero;
     });
-    widget._controller.fling(
-        velocity: AnimUtil.isBackpanelVisible(widget._controller) ? -1.0 : 1.0);
+    _startAnimation(widget._controller);
   }
 
   void _backViewOnClick(int position) {
@@ -46,14 +45,7 @@ class _MainActivityState extends State<MainActivity> {
       child: Stack(
         children: <Widget>[
           _backView(_theme),
-          SlideTransition(
-            position: _getSlideAnimation(constraint),
-            child: ScaleTransition(
-              alignment: Alignment.centerLeft,
-              scale: _getScaleAnimation(constraint),child: _frontView(),))
-          // SlideTransition(
-          //     position: _getSlideAnimation(constraint), child: _frontView()),
-        ],
+         _frontView()],
       ),
     );
   }
@@ -67,7 +59,7 @@ class _MainActivityState extends State<MainActivity> {
       backgroundColor: theme.backgroundColor,
       body: Container(
         child: Column(
-          crossAxisAlignment:CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             MaterialButton(
               onPressed: () => _backViewOnClick(0),
@@ -100,18 +92,28 @@ class _MainActivityState extends State<MainActivity> {
     );
   }
 
+/*
+Frontview body is wrappped by SlideTransition and ScaleTransition.
+Alignment is set to centerLeft inorder to show navigation back button.
+*/
+
   Widget _frontView() {
+    return SlideTransition(
+        position: _getSlideAnimation(),
+        child: ScaleTransition(
+          alignment: Alignment.centerLeft,
+          scale: _getScaleAnimation(),
+          child: _frontViewBody(),
+        ));
+  }
+
+  Widget _frontViewBody() {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Navigation"),
+        title: Text("Avengers"),
         backgroundColor: Colors.purple,
         leading: IconButton(
-          onPressed: () {
-            widget._controller.fling(
-                velocity: AnimUtil.isBackpanelVisible(widget._controller)
-                    ? -1.0
-                    : 1.0);
-          },
+          onPressed: () => _startAnimation(widget._controller),
           icon: AnimatedIcon(
             icon: AnimatedIcons.arrow_menu,
             progress: widget._controller,
@@ -125,7 +127,7 @@ class _MainActivityState extends State<MainActivity> {
               child: Container(
                 child: Center(
                   child: Text(
-                    _superHero,
+                    _superHeroName,
                     style: TextStyle(fontSize: 30, color: Colors.red),
                   ),
                 ),
@@ -137,16 +139,9 @@ class _MainActivityState extends State<MainActivity> {
     );
   }
 
-  Animation<Offset> _getSlideAnimation(BoxConstraints _constraints) {
-    return Tween(begin: Offset(0.85, 0.0), end: Offset(0, 0)).animate(
-        CurvedAnimation(parent: widget._controller, curve: Curves.linear));
-  }
-
-  Animation<double> _getScaleAnimation(BoxConstraints _constraints){
-    return Tween(
-      begin: 0.7,end: 1.0).animate(CurvedAnimation(
-        parent: widget._controller, curve: Curves.linear
-      ));
+  void _startAnimation(AnimationController _controller) {
+    _controller.fling(
+        velocity: AnimUtil.isBackpanelVisible(widget._controller) ? -1.0 : 1.0);
   }
 
   @override
@@ -154,5 +149,23 @@ class _MainActivityState extends State<MainActivity> {
     return LayoutBuilder(
       builder: activityContainer,
     );
+  }
+
+/* 
+FrontView Slide Animation 
+*/
+
+  Animation<Offset> _getSlideAnimation() {
+    return Tween(begin: Offset(0.85, 0.0), end: Offset(0, 0)).animate(
+        CurvedAnimation(parent: widget._controller, curve: Curves.linear));
+  }
+
+/*
+Front View Scale Animation
+*/
+
+  Animation<double> _getScaleAnimation() {
+    return Tween(begin: 0.7, end: 1.0).animate(
+        CurvedAnimation(parent: widget._controller, curve: Curves.linear));
   }
 }

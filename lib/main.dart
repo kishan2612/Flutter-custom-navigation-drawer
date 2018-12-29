@@ -39,12 +39,6 @@ class _MyHomePageState extends State<MyHomePage>
     _controller.dispose();
   }
 
-  bool _isBackpanelVisible(){
-    final AnimationStatus status = _controller.status;
-
-    return status == AnimationStatus.completed || status == AnimationStatus.forward;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
